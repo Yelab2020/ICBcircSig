@@ -6,7 +6,7 @@ library(survival)
 library(survminer)
 
 #==data1.Clinic Information
-PRJEB_Ann_train <- read.delim("/work/dy/project/2020CircRNA/temp_github/data/SampleClinicInformation.txt")
+PRJEB_Ann_train <- read.delim("/work/data/SampleClinicInformation.txt")
 all_preID <- as.character(PRJEB_Ann_train[PRJEB_Ann_train$PrePost=="PRE",]$SRR)
 PD1_preID <- as.character(PRJEB_Ann_train[PRJEB_Ann_train$Treatment=="PD1" & PRJEB_Ann_train$PrePost=="PRE",]$SRR)
 ipiPD1_preID <- as.character(PRJEB_Ann_train[PRJEB_Ann_train$Treatment=="ipiPD1" & PRJEB_Ann_train$PrePost=="PRE",]$SRR)
@@ -14,10 +14,10 @@ ipiPD1_preID <- as.character(PRJEB_Ann_train[PRJEB_Ann_train$Treatment=="ipiPD1"
 sur_survival=PRJEB_Ann_train[match(all_preID,PRJEB_Ann_train$SRR,nomatch=0),]
 
 #=data2.
-all_CircDataM88sample_89204Circ_exp_sub5350 <- readr::read_rds("/work/dy/project/2020CircRNA/temp_github/data/circRNA_exp.rds")
+all_CircDataM88sample_89204Circ_exp_sub5350 <- readr::read_rds("/work/data/circRNA_exp.rds")
 
 #=data3.
-FPS_MK_SIG=read.table("/work/dy/project/2020CircRNA/temp_github/data/pre_PFS25_CoxMK_SIG.tab")
+FPS_MK_SIG=read.table("/work/data/pre_PFS25_CoxMK_SIG.tab")
 FPS_MK_SIG=as.character(FPS_MK_SIG[,1])
 
 pre_exp_PFS=all_CircDataM88sample_89204Circ_exp_sub5350[FPS_MK_SIG,all_preID]
@@ -48,10 +48,7 @@ sig_gene_multi_cox <- rownames(coefficient)[Active.Index]
 sig_gene_multi_cox
 
 ###= cox 
-Mulcox <- coxph(Surv(PFST,PFS) ~ `chr1_236178413_236183906_+_GPR137B` + 
-									`chr2_202755537_202759353_+_FAM117B` + 
-									`chr12_88148287_88176319_+_TMTC3` + 									
-									`chr11_6941570_6955782_+_ZNF215` , data =  pre_exp_PFSsur)
+Mulcox <- coxph(Surv(PFST,PFS) ~ `chr1_236178413_236183906_+_GPR137B` + `chr2_202755537_202759353_+_FAM117B` + `chr12_88148287_88176319_+_TMTC3` + 									`chr11_6941570_6955782_+_ZNF215` , data =  pre_exp_PFSsur)
 Mulcox_coef <- coef(Mulcox)
 Mulcox_Coxp <- signif(as.numeric(summary(Mulcox)$coefficients[,c( "Pr(>|z|)")]),digit=4)
 Mulcox_coef_used=Mulcox_coef[Mulcox_Coxp<0.05]
@@ -117,7 +114,7 @@ ggboxplot(survival_dat, x = "Benefit", y = "gene",color='Benefit',add = "jitter"
           stat_compare_means(method = "wilcox") + scale_color_npg() #scale_fill_manual(values=c('red','blue')) + labs(ylab='score') #kruskal.test
 
 #=data4.
-tempExp=readRDS('/work/dy/project/2020CircRNA/temp_github/data/exp_CD274_PDCD1.rds')
+tempExp=readRDS('/work/data/exp_CD274_PDCD1.rds')
 #========cox 
 survival_dat=data.frame(survival_dat,t(tempExp[,rownames(survival_dat)]))
 survival_dat$gender=temp_sur$Sex	
