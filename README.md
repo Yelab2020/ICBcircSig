@@ -1,5 +1,5 @@
 # ICBcircSig score model
-ICBcircSig is to calculate candidate circRNA and construct circRNA score to predict ICB response. We provided all main codes of calling circRNA
+Immune checkpoint blocakde-related circRNA signature (ICBcircSig)  is to calculate candidate circRNA and construct circRNA score to predict ICB response. We provided all main codes of calling circRNA
 of four well known method, identify differential expressed circRNAs and filtering candidate circRNA then build the circRNA score. The main process was described below.
 
 ## 1. Identification of circRNAs in the ICB samples 
