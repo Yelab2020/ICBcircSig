@@ -36,7 +36,7 @@ runlme.My = function(circID,datRPM,datTraits,label){
 }
 
 #===================input 1.clinicl data
-PRJEB_Ann <- read.delim("/work/dy/project/2020CircRNA/temp_github/data/SampleClinicInformation.txt")
+PRJEB_Ann <- read.delim("/work/data/SampleClinicInformation.txt")
 preBenefitID <- PRJEB_Ann[PRJEB_Ann$Benefit=="Benefit" & PRJEB_Ann$PrePost=="PRE",]$SRR
 preNonBenefitID <- PRJEB_Ann[PRJEB_Ann$Benefit=="NonBenefit" & PRJEB_Ann$PrePost=="PRE",]$SRR
 postBenefitID <- PRJEB_Ann[PRJEB_Ann$Benefit=="Benefit" & PRJEB_Ann$PrePost=="EDT",]$SRR
@@ -47,7 +47,7 @@ PRJEB_Ann_LME=dplyr::rename(PRJEB_Ann_LME,'ID'=SRR)
 PRJEB_Ann_LME$SRR=PRJEB_Ann_LME$ID
 
 #===================input 2.circRNA data
-all_CircDataMF_LME=readr::read_rds("/work/dy/project/2020CircRNA/temp_github/data/circRNA_exp.rds");
+all_CircDataMF_LME=readr::read_rds("/work/data/circRNA_exp.rds");
 
 all_CircDataMF_LME_exp=t(all_CircDataMF_LME[,as.character(PRJEB_Ann$SRR)]/max(all_CircDataMF_LME[,as.character(PRJEB_Ann$SRR)]))
 all_CircDataMF_LME_exp=cbind(ID=PRJEB_Ann$SRR, as.data.frame(all_CircDataMF_LME_exp))
